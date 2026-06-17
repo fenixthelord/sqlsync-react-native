@@ -100,3 +100,33 @@ export interface UseSqlSyncRecordReturn {
   loading: boolean;
   error: string | null;
 }
+
+// ── Field Mappings ──────────────────────────────────────────────────────────
+
+export interface SqlSyncMapping {
+  id?: number;
+  preset: string;
+  source_field: string;
+  target_label: string;
+  target_role: string | null;
+  is_price: boolean;
+  is_unit: boolean;
+  is_visible: boolean;
+  sort_order: number;
+  company_id?: number | null;
+}
+
+export interface ResolvedField {
+  label:    string;
+  value:    string | number | null;
+  role:     string | null;
+  is_price: boolean;
+  is_unit:  boolean;
+}
+
+export interface UseSqlSyncMappingsReturn {
+  mappings: SqlSyncMapping[];
+  loading:  boolean;
+  error:    string | null;
+  refresh:  () => void;
+}
