@@ -1,4 +1,4 @@
-import { SqlSyncConfig, SqlSyncRecord, SqlSyncStats, PaginatedResponse } from '../types';
+import { SqlSyncConfig, SqlSyncRecord, SqlSyncStats, SqlSyncMapping, PaginatedResponse } from '../types';
 
 export class SqlSyncApiService {
   private config: SqlSyncConfig;
@@ -62,6 +62,21 @@ export class SqlSyncApiService {
 
     return response.json();
   }
+
+  async getMappings(preset: string): Promise<SqlSyncMapping[]> {
+  const url = this.buildUrl('mappings', { preset });
+
+  const response = await fetch(url, {
+    headers: { 'Accept': 'application/json' },
+  });
+
+  if (!response.ok) {
+    throw new Error(`SqlSync API error: ${response.status}`);
+  }
+
+  const data = await response.json();
+  return data.mappings ?? [];
+}
 
   async getStats(): Promise<SqlSyncStats> {
     const url = this.buildUrl('stats');
